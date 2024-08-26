@@ -1,7 +1,6 @@
 import bcrypt from "bcrypt"
-import jwt from "jwt"
-import User from "../models/User"
-
+import jwt from "jsonwebtoken"
+import User from "../models/User.js"
 export const register = 
     async (req,res) => {
         try {
@@ -15,10 +14,11 @@ export const register =
             location,
             occupation,
         } = req.body;
-
+        console.log("Password:", password);
         const salt = await bcrypt.genSalt();
+        //console.log(salt);
         const passwordHash = await bcrypt.hash(password,salt);
-
+        console.log(passwordHash);
         const newUser = new User({
             firstName,
             lastName,
@@ -40,7 +40,8 @@ export const register =
         }
     };
 
-    export const login = async (req,res) => {
+    export const login = 
+    async (req,res) => {
       try { 
          const {email,password} = req.body
         const user  = await User.findOne({email:email});
