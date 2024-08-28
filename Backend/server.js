@@ -2,9 +2,9 @@ import express from 'express';
 import dotenv from 'dotenv';
 import connect from './db/db.js';
 import User from "./models/User.js";
-import Post from "./models/Post.js"
 import authRoutes from './Routes/authRoutes.js';
 import userRoutes from './Routes/userRoutes.js';
+import postRoutes from './Routes/postRoutes.js'
 import { register } from './controllers/auth.js';
 import { cratePost } from './controllers/post.js';
 import { fileURLToPath } from "url";
@@ -43,12 +43,12 @@ const PORT = process.env.PORT || 3000; // Set a default port if PORT is not defi
 
 //app.post("/auth/register", register);
 app.post("/auth/register", upload.single("image"), register);
-// app.post("/posts", verifyToken, cratePost);
+//app.post("/posts", verifyToken, cratePost);
 
 /* ROUTES */
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
-// app.use("/post", postRoutes);
+app.use("/posts", postRoutes);
 
 app.listen(PORT, async () => {
     try {       
