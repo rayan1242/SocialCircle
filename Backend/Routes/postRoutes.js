@@ -9,8 +9,8 @@ import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.use("/",verifyToken,getFeedPosts);
-
-router.use("/:id",verifyToken,getSinglePost);
+router.get("/", verifyToken, getFeedPosts);
+//router.get("/:userId/posts", verifyToken, getUserPosts);
+router.get("/status/:postId", verifyToken,getSinglePost);
 
 export default router;
