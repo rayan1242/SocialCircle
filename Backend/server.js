@@ -4,7 +4,8 @@ import connect from './db/db.js';
 import User from "./models/User.js";
 import authRoutes from './Routes/authRoutes.js';
 import userRoutes from './Routes/userRoutes.js';
-import postRoutes from './Routes/postRoutes.js'
+import postRoutes from './Routes/postRoutes.js';
+import commentRoutes from './Routes/commentRout.js';
 import { register } from './controllers/auth.js';
 import { cratePost } from './controllers/post.js';
 import { fileURLToPath } from "url";
@@ -49,6 +50,7 @@ app.post("/auth/register", upload.single("image"), register);
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
+app.use("/comments", commentRoutes);
 
 app.listen(PORT, async () => {
     try {       
