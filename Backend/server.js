@@ -5,7 +5,7 @@ import User from "./models/User.js";
 import authRoutes from './Routes/authRoutes.js';
 import userRoutes from './Routes/userRoutes.js';
 import postRoutes from './Routes/postRoutes.js';
-import commentRoutes from './Routes/commentRout.js';
+import commentRoutes from './Routes/commentRoute.js';
 import { register } from './controllers/auth.js';
 import { cratePost } from './controllers/post.js';
 import { fileURLToPath } from "url";
