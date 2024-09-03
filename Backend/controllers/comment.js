@@ -1,6 +1,6 @@
 import Comment from "../models/Comment";
 import User from "../models/User";
-
+import Post from "../models/Post";
 export const createComment = async (req,res) => {
    try {
     console.log("controller");
@@ -41,4 +41,27 @@ export const getPostComments = async(req,res)=>{
     }
 }
 
+export const likeComment = async(req,res) =>{
+    try {
+        const {postId} = req.params;
+    const {userId} = req.body;
+    const post = await Post.findById(postId);
+    const isLiked = await post.likes.findById(userId);
+    
+    if(isLiked){
+        post.likes.delete(userId);
+    }else{
+        post.likes.set(userId,true);
+    }
+    const UpdatedPost = await Comment.findByIdAndUpdate(
+        id,
+        { likes:post.likes },
+        {new : true}
+    );
+    res.status(200).json(UpdatedPost);
+    } catch (err) {
+        res.status(404).json({ message: err.message });
+    }
+};
 
+ 
