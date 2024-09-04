@@ -1,6 +1,6 @@
 import   express from 'express';
 import { verifyToken } from "../middleware/auth";
-import { createComment, likeComment } from "../controllers/comment";
+import { createComment, likeComment, updateComment } from "../controllers/comment";
 import { getPostComments } from '../controllers/comment';
 const router = express.Router();
 
@@ -10,4 +10,6 @@ router.get('/:postId',verifyToken,getPostComments);
 
 
 router.patch('/:commentId/like',verifyToken,likeComment);
+router.patch('/:commentId/update',verifyToken,updateComment);
+
 export default router;

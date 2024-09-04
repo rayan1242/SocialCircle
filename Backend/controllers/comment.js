@@ -65,3 +65,16 @@ export const likeComment = async(req,res) =>{
 };
 
  
+export const updateComment = async (req, res) => {
+    let { _id } = req.body;
+
+    try {
+        const updatedComment = await Comment.findByIdAndUpdate(
+            { _id: _id },
+            req.body
+        );
+        res.status(200).json(updatedComment);
+    } catch (err) {
+        res.status(404).json({ message: err.message });
+    }
+};
