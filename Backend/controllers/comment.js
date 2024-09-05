@@ -1,11 +1,12 @@
-import Comment from "../models/Comment";
-import User from "../models/User";
-import Post from "../models/Post";
+import Comment from "../models/Comment.js";
+import User from "../models/User.js";
+import Post from "../models/Post.js";
 export const createComment = async (req,res) => {
    try {
     console.log("controller");
     const {postId,userId,description} = req.body;
     const user = await User.findById(userId);
+    console.log(userId,postId,description);
     const newComment = new Comment(
         {
         postId,
@@ -25,37 +26,45 @@ export const createComment = async (req,res) => {
     res.status(201).json(comment);
    } catch (error) {
     console.log("Error creating Comment!");
-        console.log(err);
-        res.status(409).json({ message: err.message });
+        console.log(error);
+        res.status(409).json({ message: error.message });
    }
 
 }
 
-export const getPostComments = async(req,res)=>{
-    const {postId} = req.params;
+
+export const getPostComments = async (req, res) => {
+    const { postId } = req.params;
+
     try {
-        const comments = await Comment.find({postId:postId});
-        res.status(201).json(comments);
-    } catch (error) {
-        res.status(500).json({message: error.message});
+        const comments = await Comment.find({ postId: postId });
+        res.status(200).json(comments);
+    } catch (err) {
+        res.status(404).json({ message: err.message });
     }
-}
+};
+
 
 export const likeComment = async(req,res) =>{
     try {
-        const {postId} = req.params;
+    const {postId} = req.params;
     const {userId} = req.body;
-    const post = await Post.findById(postId);
-    const isLiked = await post.likes.findById(userId);
-    
+    console.log(postId,userId);
+    const comment = await Comment.findById(postId);
+    let isLiked = false;
+    if (!comment) {
+        throw new Error('Post not found');
+      }
+    isLiked = await comment.likes.get(userId);
+    console.log(isLiked);
     if(isLiked){
-        post.likes.delete(userId);
+        comment.likes.delete(userId);
     }else{
-        post.likes.set(userId,true);
+        comment.likes.set(userId,true);
     }
     const UpdatedPost = await Comment.findByIdAndUpdate(
-        id,
-        { likes:post.likes },
+        comment._id,
+        { likes:comment.likes },
         {new : true}
     );
     res.status(200).json(UpdatedPost);
@@ -74,6 +83,20 @@ export const updateComment = async (req, res) => {
             req.body
         );
         res.status(200).json(updatedComment);
+    } catch (err) {
+        res.status(404).json({ message: err.message });
+    }
+};
+
+/* DELETE COMMENT */
+export const deleteComment = async (req, res) => {
+    let { _id } = req.body;
+
+    try {
+        await Comment.findByIdAndDelete(
+            { _id: _id }
+        );
+        res.status(200).json({message: "Comment Deleted..."});
     } catch (err) {
         res.status(404).json({ message: err.message });
     }

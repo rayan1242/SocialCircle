@@ -40,7 +40,7 @@ export const register =
         }
     };
 
-    export const login = 
+export const login = 
     async (req,res) => {
       try { 
          const {email,password} = req.body
@@ -59,4 +59,4 @@ export const register =
     } catch(err){
         res.status(500).json({error:err.message});
     }
-    }
+}
