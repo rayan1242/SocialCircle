@@ -1,4 +1,4 @@
-Owner : https://github.com/ManishK4514/SocialCircle
+Original repository : https://github.com/ManishK4514/SocialCircle
 
 ![line]
 
