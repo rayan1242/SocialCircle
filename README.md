@@ -1,12 +1,5 @@
     Last updated on: 9th September 2023
 
-<div align=center>
-    <a href="https://socialcircle.vercel.app/">
-        <img width="702" src="https://i.ibb.co/wBxTP2b/Screenshot-302.png" alt="sociopedia">
-    </a>
-</div>
-
-
 ![line]
 
 ## Table of Contents
