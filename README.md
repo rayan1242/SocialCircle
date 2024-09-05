@@ -1,4 +1,4 @@
-    Last updated on: 9th September 2023
+Owner : https://github.com/ManishK4514/SocialCircle
 
 ![line]
 
